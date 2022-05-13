@@ -1,5 +1,10 @@
 package banco;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class conta {
 	
 	private double saldo;
@@ -68,12 +73,43 @@ public class conta {
         this.titular = titular;
     }
     
+    private String getTitular() {
+		return this.titular;
+	}
+    
     public void setCPF (String CPF) {
     	this.CPF = CPF;
+    }
+    
+    public void setSaldo(double saldo) {
+        if(saldo <= 0) {
+            System.out.println("Não é possível valores negativos");
+            return;
+        }
+        this.saldo = saldo;
     }
 
     public static int getTotal() {
         return conta.total;
     }
+    
+    private List<conta> contas = new ArrayList<>();
+    private Map<String, conta> indexadoPorNome = new HashMap<>();
+    
+    public void adiciona(conta conta) {
+		contas.add(conta);
+		indexadoPorNome.put(conta.getTitular(), conta);
+	}
 
+	public conta pega(int posicao) {
+		return contas.get(posicao);
+	}
+
+	public int getQuantidadeDeContas() {
+		return contas.size();
+	}
+	
+	public conta buscaPorTitular(String nomeDoTitular) {
+		return indexadoPorNome.get(nomeDoTitular);
+	}
 }
